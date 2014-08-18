@@ -1,5 +1,4 @@
-var data=JSON.parse('
-[{"COUNTRY":"Anguilla", "status":"Non-Top 5 Sending Country", "ex_2000":"9.00","ex_2006":"28.40"},
+var data= [{"COUNTRY":"Anguilla", "status":"Non-Top 5 Sending Country", "ex_2000":"9.00","ex_2006":"28.40"},
 {"COUNTRY":"Argentina","status":"Non-Top 5 Sending Country","ex_2000":"8.74","ex_2006":"5.27"},
 {"COUNTRY":"Belize","status":"Non-Top 5 Sending Country","ex_2000":"18.00","ex_2006":"32.67"},
 {"COUNTRY":"Bolivia","status":"Non-Top 5 Sending Country","ex_2000":"31.38","ex_2006":"16.05"},
@@ -23,4 +22,4 @@ var data=JSON.parse('
 {"COUNTRY":"Saint Lucia", "status":"Non-Top 5 Sending Country","ex_2000":"14.00","ex_2006":"16.00"},
 {"COUNTRY":"Trinidad and Tobago","status":"Non-Top 5 Sending Country","ex_2000":"9.00","ex_2006":"28.40"},
 {"COUNTRY":"Uruguay","status":"Non-Top 5 Sending Country","ex_2000":"4.92","ex_2006":"4.30"},
-{"COUNTRY":"Venezuela","status":"Non-Top 5 Sending Country","ex_2000":"29.80","ex_2006":"45.00"}]')
+{"COUNTRY":"Venezuela","status":"Non-Top 5 Sending Country","ex_2000":"29.80","ex_2006":"45.00"}]

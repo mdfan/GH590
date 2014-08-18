@@ -1,25 +1,25 @@
 //Width and height settings
 var settings = {
-	width:600,
-	height:600,
-	radius:10,
-	padding:45
+	width:400,
+	height:400,
+	radius:8,
+	padding:60
 }
 
 //Scale-setting function
 var setScales=function() {
 	//Get min/max values for x
-	xValues=data.map(function(d) {return d.ex_2000})
+	xValues=data.map(function(d) {return Number(d.ex_2000)})
 	xMin=d3.min(xValues)
 	xMax=d3.max(xValues)
 
 	// Using a function for y
-	yMin = d3.min(data, function(d ){return d.ex_2006})
-	yMax = d3.max(data, function(d ){return d.ex_2006})
+	yMin = d3.min(data, function(d ){return Number(d.ex_2006)})
+	yMax = d3.max(data, function(d ){return Number(d.ex_2006)})
   
 	// Define the xScale
 	xScale = d3.scale.linear().domain([xMin, xMax]).range([settings.radius, settings.width - settings.radius])
- 
+	
 	// Define the yScale
 	yScale = d3.scale.linear().domain([yMin, yMax]).range([settings.height - settings.radius,settings.radius])
 	
@@ -27,13 +27,13 @@ var setScales=function() {
 	xAxisFunction = d3.svg.axis()
 	  .scale(xScale)
 	  .orient('bottom')
-	  .ticks(7)
+	  .ticks(8)
 	  
 	// Define the yAxis
 	yAxisFunction = d3.svg.axis()
 	  .scale(yScale)
 	  .orient('left')
-	  .ticks(7)
+	  .ticks(8)
 	  
 	// Color scale
 	colorScale = d3.scale.category10()
@@ -49,11 +49,13 @@ var build = function() {
 	  .attr('transform', 'translate(' + settings.padding + ','+ (settings.height + settings.padding) + ')')
 	  .call(xAxisFunction)
 	  
+  
 	// Append yAxis
 	yAxis = d3.select('#scatter-svg').append('g').attr('class', 'axis')
 	  .attr('transform', 'translate(' + settings.padding + ',' + settings.padding + ')')
 	  .call(yAxisFunction)
 	  
+  
 	// Append G in which to draw the plot
 	plotG = d3.select('#scatter-svg').append('g').attr('transform', 'translate(' + settings.padding + ',' + settings.padding + ')')
 	
@@ -74,7 +76,7 @@ var circleFunc = function(circ) {
   	.attr('cy', function(d) {return yScale(d.ex_2006)})
 	.attr('r', settings.radius)
 	.attr('fill', function(d) {
-		return colorScale(d.region)
+		return colorScale(d.status)
 	})
 	.style('opacity', '.8')
 } 
@@ -93,7 +95,7 @@ var draw = function() {
 	// Exit elements that may have left
 	circles.exit().remove()
 	
-	// Transition all circles to new ddata
+	// Transition all circles to new data
 	plotG.selectAll('circle').transition().duration(500).call(circleFunc)
 	
 	// Axes
@@ -103,13 +105,13 @@ var draw = function() {
 // Draw axis labels
 var drawAxisLabels = function() {
 	// xAxisLabel
-	xAxisLabel = d3.select('#scatter-svg').append('text').attr('transform', 'translate(' + settings.width/2 + ',' + (settings.height + settings.padding*2) + ')').text('Homicide Rate Per 100,000 Pop., 2000')
+	xAxisLabel = d3.select('#scatter-svg').append('text').attr('transform', 'translate(' + settings.width/4 + ',' + (settings.height + settings.padding*2) + ')').text('Homicide Rate Per 100,000 of the Population, 2000')
 	
 	// yAxisLabel
-	yAxisLabel = d3.select('#scatter-svg').append('text').attr('transform', 'translate(' + settings.padding/3 + ',' + (settings.height*2/3) + ') rotate(270)').text('Homicide Rate Per 100,000 Pop., 2006')
+	yAxisLabel = d3.select('#scatter-svg').append('text').attr('transform', 'translate(' + settings.padding/4 + ',' + (settings.height*1/1) + ') rotate(270)').text('Homicide Rate Per 100,000 of the Population, 2006')
 
 	// title
-	title = d3.select('#scatter-svg').append('text').attr('transform', 'translate(' + settings.width/2.5 + ',' + (30) + ')').text('Homicide Rates in Latin America and the Caribbean, 2000 Compared to 2006')
+	title = d3.select('#scatter-svg').append('text').attr('transform', 'translate(' + settings.width/4 + ',' + (30) + ')').text('Homicide Rates in Latin America and the Caribbean, 2000 Compared to 2006')
 }
 
 // Legend function
