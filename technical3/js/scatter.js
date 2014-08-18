@@ -9,13 +9,13 @@ var settings = {
 //Scale-setting function
 var setScales=function() {
 	//Get min/max values for x
-	xValues=data.map(function(d) {return d.2000})
+	xValues=data.map(function(d) {return d.ex_2000})
 	xMin=d3.min(xValues)
 	xMax=d3.max(xValues)
 
 	// Using a function for y
-	yMin = d3.min(data, function(d ){return d.2006})
-	yMax = d3.max(data, function(d ){return d.2006})
+	yMin = d3.min(data, function(d ){return d.ex_2006})
+	yMax = d3.max(data, function(d ){return d.ex_2006})
   
 	// Define the xScale
 	xScale = d3.scale.linear().domain([xMin, xMax]).range([settings.radius, settings.width - settings.radius])
@@ -70,8 +70,8 @@ var build = function() {
 // Circle positioning function
 var circleFunc = function(circ) {
 	circ
-	.attr('cx', function(d) {return xScale(d.2000)})
-  	.attr('cy', function(d) {return yScale(d.2006)})
+	.attr('cx', function(d) {return xScale(d.ex_2000)})
+  	.attr('cy', function(d) {return yScale(d.ex_2006)})
 	.attr('r', settings.radius)
 	.attr('fill', function(d) {
 		return colorScale(d.region)
