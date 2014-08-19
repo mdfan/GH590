@@ -105,7 +105,7 @@ var draw = function() {
 // Draw axis labels
 var drawAxisLabels = function() {
 	// xAxisLabel
-	xAxisLabel = d3.select('#scatter-svg').append('text').attr('transform', 'translate(' + settings.width/4 + ',' + (settings.height + settings.padding*2) + ')').text('Homicide Rate Per 100,000 of the Population, 2000')
+	xAxisLabel = d3.select('#scatter-svg').append('text').attr('transform', 'translate(' + settings.width/4 + ',' + (settings.height + settings.padding*1.8) + ')').text('Homicide Rate Per 100,000 of the Population, 2000')
 	
 	// yAxisLabel
 	yAxisLabel = d3.select('#scatter-svg').append('text').attr('transform', 'translate(' + settings.padding/4 + ',' + (settings.height*1/1) + ') rotate(270)').text('Homicide Rate Per 100,000 of the Population, 2006')
@@ -123,7 +123,7 @@ var drawLegend = function() {
 	})
 	
 	// Append a legend G
-	legendG = d3.select('#scatter-svg').append('g').attr('id', 'legendG').attr('transform', 'translate(' + (settings.width + 2*settings.padding) + ',' + settings.padding + ')')
+	legendG = d3.select('#scatter-svg').append('g').attr('id', 'legendG').attr('transform', 'translate(' + (settings.width + 0.5*settings.padding) + ',' + settings.padding + ')')
 	legendG.selectAll('text')
 		.data(status)
 		.enter().append('text')
