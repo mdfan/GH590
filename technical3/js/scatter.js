@@ -111,7 +111,7 @@ var drawAxisLabels = function() {
 	yAxisLabel = d3.select('#scatter-svg').append('text').attr('transform', 'translate(' + settings.padding/4 + ',' + (settings.height*1/1) + ') rotate(270)').text('Homicide Rate Per 100,000 of the Population, 2006')
 
 	// title
-	title = d3.select('#scatter-svg').append('text').attr('transform', 'translate(' + settings.width/4 + ',' + (30) + ')').text('Homicide Rates in Latin America and the Caribbean, 2000 Compared to 2006')
+	title = d3.select('#scatter-svg').append('text').attr('transform', 'translate(' + settings.width/5 + ',' + (30) + ')').text('Homicide Rates in Latin America and the Caribbean, 2000 Compared to 2006')
 }
 
 // Legend function
