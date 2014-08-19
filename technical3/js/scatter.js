@@ -21,7 +21,7 @@ var setScales=function() {
 	xScale = d3.scale.linear().domain([xMin, xMax]).range([settings.radius, settings.width - settings.radius])
 	
 	// Define the yScale
-	yScale = d3.scale.linear().domain([yMin, yMax]).range([settings.height - settings.radius,settings.radius])
+	yScale = d3.scale.linear().domain([yMin, yMax]).range([settings.height - 2*settings.radius,2*settings.radius])
 	
 	// Define the xAxis
 	xAxisFunction = d3.svg.axis()
@@ -52,12 +52,12 @@ var build = function() {
   
 	// Append yAxis
 	yAxis = d3.select('#scatter-svg').append('g').attr('class', 'axis')
-	  .attr('transform', 'translate(' + settings.padding + ',' + settings.padding + ')')
+	  .attr('transform', 'translate(' + (settings.padding + settings.radius) + ',' + (settings.padding + settings.radius)+')')
 	  .call(yAxisFunction)
 	  
   
 	// Append G in which to draw the plot
-	plotG = d3.select('#scatter-svg').append('g').attr('transform', 'translate(' + settings.padding + ',' + settings.padding + ')')
+	plotG = d3.select('#scatter-svg').append('g').attr('transform', 'translate(' + (settings.padding + settings.radius) + ',' + (settings.padding +settings.radius)+ ')')
 	
 	// Draw legend
 	drawLegend()
