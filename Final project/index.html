@@ -2,28 +2,15 @@
 <html>
 <head>
   <script src="http://d3js.org/d3.v3.min.js"></script>
-	<meta name="Final Project" content="Final Project Completed" />
+	<meta name="Final Project, Mary D. Fan" content="Evaluating Correlations between Violence and Net Migration" />
 	<meta charset="utf-8">
-	<script src="lib/d3.min.js"></script>
-	<script src="js/shape.js"></script>
 	<script src="js/data.js"></script>
-	<link type="text/css" rel="stylesheet" href="css/map.css"></link>
-    <script type="text/javascript" src="lib/jquery-1.8.2.min.js"></script>
-    <script type="text/javascript" src="lib/poshytip-1.2/src/jquery.poshytip.js"></script>
-    <link type="text/css" rel="stylesheet" href="lib/poshytip-1.2/src/tip-twitter/tip-twitter.css"/>
-	<script type="text/javascript">
-		var query = window.location.search.substring(1);
-  		var vars = query.split("&");
-  		var color = vars[0] == undefined ? false : vars[0].split('=')[1]
-  		var hover = vars[1] == undefined ? false : vars[1].split('=')[1]
-	</script>
 	</head>
   <body>
-	<div id="map-div">
-		<svg id="map-svg">
-		<g id="map-g"></g>
+	<div id="scatter-div">
+		<svg id="scatter-svg" height=900 width=900>
 		</svg>
+	  <script src="js/scatter.js"></script>
 	</div>
-	<script src="js/map.js"></script>
+	  </body>
 </html>
-
