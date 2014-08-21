@@ -1,0 +1,22 @@
+#scatter-svg {
+	height:900px;
+	width:1500px;
+}
+
+.axis path, .axis line {
+	fill: none;
+	stroke: white;
+	shape-rendering: crispEdges;
+	stroke-width="2px"
+}
+
+#map-svg {
+	height:1000px;
+	width:1000px;
+}
+
+.legend {
+	padding: 5px;
+	font: 10px sans-serif;
+	background: red;
+	box-shadow: 2px 2px 1px #888;

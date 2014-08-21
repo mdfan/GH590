@@ -2,15 +2,48 @@
 <html>
 <head>
   <script src="http://d3js.org/d3.v3.min.js"></script>
-	<meta name="Final Project, Mary D. Fan" content="Evaluating Correlations between Violence and Net Migration" />
+	<meta name="Mary D. Fan" content="Evaluating Correlations between Violence and Net Migration" />
 	<meta charset="utf-8">
+	<script src="js/shape.js"></script>
 	<script src="js/data.js"></script>
-	</head>
-  <body>
-	<div id="scatter-div">
-		<svg id="scatter-svg" height=900 width=900>
-		</svg>
-	  <script src="js/scatter.js"></script>
+	<link href="css/textStyles.css" rel="stylesheet" type="text/css">
+	<link type="text/css" rel="stylesheet" href="css/map.css"></link>
+	<script src="lib/jqueryFold/external/jquery/jquery.js"></script>
+	<script src="lib/jqueryFold/jquery-ui.js"></script>
+	<link href="lib/jqueryFold/jquery-ui.css" rel="stylesheet">
+	<script src="lib/poshytip-1.2/src/jquery.poshytip.js"></script>
+	<link href="lib/poshytip-1.2/src/tip-twitter/tip-twitter.css" rel="stylesheet">
+	<script type="text/javascript">
+		var query = window.location.search.substring(1);
+  		var vars = query.split("&");
+  		var color = vars[0] == undefined ? false : vars[0].split('=')[1]
+  		var hover = vars[1] == undefined ? false : vars[1].split('=')[1]
+	</script>
+</head>
+  
+  <body bgcolor="#000033">
+	<div style="width:1300px; height:620px; border:6px solid #CC00FF;" id="scatter-div">
+				<svg id="scatter-svg" height=1500 width=1500>
+			</svg>
+		<script src="js/scatter.js"></script>
+		</div>
 	</div>
+	
+	<div id="headline-div">
+	<br></br>
+	<text><font size="6px"> <font color="white"><font face="Arial"><center>Geographic Proximity Can Moderate the Relationship</center></font></text>
+		</div>
+	  
+	  
+	<div style="width:1300px; height:500px; border:6px solid #CC00FF;" id="map-div">
+		<svg id="map-svg">
+		<g id="map-g"></g>
+		</svg>
+	</div>
+	<script src="js/map.js"></script>
+	<div id="copyright-div">
+		<br></br>
+		<text><font size="4px"><center>Copyright 2014, Mary D. Fan</center></font></text>
+		</div>
 	  </body>
 </html>

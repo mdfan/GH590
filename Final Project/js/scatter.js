@@ -1,15 +1,25 @@
 //Width and height settings
 var settings = {
-	width:1000,
+	width:1200,
 	height:500,
 	radius:8,
-	padding:60
+	padding:60,
+	xVar: "mig_2012",
+	yVar: "hom_2012",
 }
 
+//Filter data
+console.log(data.length)
+var filterFunction = function(d) {
+	console.log(d.hom_2012, d.hom_2012!==null)
+	return d.hom_2012 !== null
+}
+var data = data.filter(filterFunction)
+console.log(data.length)
 //Scale-setting function
 var setScales=function() {
 	//Get min/max values for x
-	xValues=data.map(function(d) {return Number(d.mig_2012/100,000)})
+	xValues=data.map(function(d) {return Number(d.mig_2012)})
 	xMin=d3.min(xValues)
 	xMax=d3.max(xValues)
 
@@ -23,6 +33,9 @@ var setScales=function() {
 	// Define the yScale
 	yScale = d3.scale.linear().domain([yMin, yMax]).range([settings.height - 2*settings.radius,2*settings.radius])
 	
+	// Define the middleScale
+	middleScale = d3.scale.linear().domain([yMin, yMax]).range([settings.height - 2*settings.radius,2*settings.radius])
+	
 	// Define the xAxis
 	xAxisFunction = d3.svg.axis()
 	  .scale(xScale)
@@ -35,6 +48,12 @@ var setScales=function() {
 	  .orient('left')
 	  .ticks(15);
 	  
+	// Define the middleAxis
+	middleAxisFunction = d3.svg.axis()
+	  .scale(yScale)
+	  .orient('right')
+	  .ticks(0);
+	  
 	// Color scale
 	colorScale = d3.scale.category10();
 }  
@@ -45,19 +64,23 @@ var build = function() {
 	setScales();
 	
 	// Append xAxis
-	xAxis = d3.select('#scatter-svg').append('g').attr('class', 'axis')
+	xAxis = d3.select('#scatter-svg').append('g').attr('class', 'axis axisTicks')
 	  .attr('transform', 'translate(' + settings.padding + ','+ (settings.height + settings.padding) + ')')
 	  .call(xAxisFunction);
 	  
   
 	// Append yAxis
 	yAxis = d3.select('#scatter-svg').append('g').attr('class', 'axis')
-	  .attr('transform', 'translate(' + (settings.padding + settings.radius) + ',' + (settings.padding + settings.radius)+')')
+	  .attr('transform', 'translate(' + (settings.padding + settings.radius) + ',' + (settings.padding + 2.3*settings.radius)+')')
 	  .call(yAxisFunction);
+
+	// Append middleAxis
+	middleAxis = d3.select('#scatter-svg').append('g').attr('class', 'axis')
+	  .attr('transform', 'translate(' + (settings.padding + 47.5*settings.radius) + ',' + (settings.padding + 2.3*settings.radius)+')')
+	  .call(middleAxisFunction);
 	  
-  
 	// Append G in which to draw the plot
-	plotG = d3.select('#scatter-svg').append('g').attr('transform', 'translate(' + (settings.padding + settings.radius) + ',' + (settings.padding +settings.radius)+ ')');
+	plotG = d3.select('#scatter-svg').append('g').attr('transform', 'translate(' + (settings.padding) + ',' + (settings.padding)+ ')');
 	
 	// Draw legend
 	drawLegend();
@@ -72,15 +95,23 @@ var build = function() {
 // Circle positioning function
 var circleFunc = function(circ) {
 	circ
-	.attr('cx', function(d) {return xScale(d.mig_2012/100,000)})
+	.attr('cx', function(d) {return xScale(d.mig_2012)})
   	.attr('cy', function(d) {return yScale(d.hom_2012)})
 	.attr('r', settings.radius)
 	.attr('fill', function(d) {
-			return colorScale(d.mig_2012)
+			console.log(d)
+			if(d[settings.xVar] <=0) {
+			return '#FF3366'
+		}
+		else {
+			return '#A9F5F2'
+		}
+
 	})
 	.style('opacity', '.8')
 } 
 
+//Other nice colors include #A9F5F2 #FF0066 #FF7F50
 
 // Draw function
 var draw = function() {
@@ -105,21 +136,19 @@ var draw = function() {
 // Draw axis labels
 var drawAxisLabels = function() {
 	// xAxisLabel
-	xAxisLabel = d3.select('#scatter-svg').append('text').attr('transform', 'translate(' + settings.width/4 + ',' + (settings.height + settings.padding*1.8) + ')').text('Net Migration (Total # Immigrants - Total # Emigrants)')
+	xAxisLabel = d3.select('#scatter-svg').append('text').attr('class', 'axisText').attr('transform', 'translate(' + settings.width/5 + ',' + (settings.height + settings.padding*1.8) + ')').text('Net Migration, in 100,000 Increments (Immigrants - Emigrants)/100,000')
 	
 	// yAxisLabel
-	yAxisLabel = d3.select('#scatter-svg').append('text').attr('transform', 'translate(' + settings.padding/3 + ',' + (settings.height*7/8) + ') rotate(270)').text('Homicide Rate Per 100,000 of the Population')
+	yAxisLabel = d3.select('#scatter-svg').append('text').attr('class', 'axisText').attr('transform', 'translate(' + settings.padding/2.5 + ',' + (settings.height*1/1) + ') rotate(270)').text('Homicide Rate Per 100,000 of the Population')
 
 	// title
-	title = d3.select('#scatter-svg').append('text').attr('transform', 'translate(' + settings.width/3 + ',' + (30) + ')').text('Violence and Net Migration')
+	title = d3.select('#scatter-svg').append('text').attr('class', 'titleText').attr('transform', 'translate(' + settings.width/15 + ',' + (30) + ')').text('Evaluating the Association Between Violence and Net Migration')
 }
-
 // Legend function
 var drawLegend = function() {
-	// Compare violence in migrant-receiving compared to migrant-sending countries
-	var status = []
+	var xVar = []
 	data.map(function(d) {
-		if(xValues.indexOf(d.xValues) <= 0) xValues.push(d.xValues)
+		if(xVar.indexOf(d.xVar) <= 0) xVar.push(d.xVar)
 	})
 	
 	// Append a legend G
@@ -132,5 +161,93 @@ var drawLegend = function() {
 		.style('fill', function(d) {return colorScale(d)})
 }
 
+	  
 // Call the draw function to make the visualization
 build()
+
+// Create SVG element
+	var svg = d3.select("#scatter-svg")
+
+//Draw legend
+	var legend = svg.append("g")
+	  .attr("height", 800)
+	  .attr("width", 800)
+      .attr('transform', 'translate(600,10)')      
+
+// Append text    
+	legend.append("text")
+      .attr("x", -450)
+      .attr("y", 170)
+	  .attr("width", 300)
+	  .attr("height", 100)
+	  .attr("class", "netSending")
+	  .text("Migrant-Sending Nations")
+
+	legend.append("text")
+      .attr("x", -500)
+      .attr("y", 200)
+	  .attr("width", 300)
+	  .attr("height", 100)
+	  .attr("class", "legendWhite")
+	  .text("Negative number means human flow out.")
+	  
+	legend.append("text")
+      .attr("x", -240)
+      .attr("y", 90)
+	  .attr("width", 300)
+	  .attr("height", 100)
+	  .attr("class", "legendWhite")
+	  .text("Zero-Migration Axis")
+	  	  
+// // Append rectangle
+	// legend.append("rect")
+      // .attr("x", -240)
+      // .attr("y", 80)
+	  // .attr("width", 180)
+	  // .attr("height", 30)
+	  // .style("fill", "white")
+
+
+	  
+//Format numbers
+
+var formatter = d3.format('.3n')
+
+//Hover
+$('#scatter-svg circle').poshytip({
+	alignTo: 'cursor', // Align to cursor
+	followCursor: true, // follow cursor when it moves
+	showTimeout: 0, // No fade in
+	hideTimeout: 0,  // No fade out
+	alignX: 'center', // X alignment
+	alignY: 'inner-bottom', // Y alignment
+	className: 'tip-twitter', // Class for styling
+	offsetY: 10, // Offset vertically
+	slide: false, // No slide animation
+	content: function(d){
+		var name = this.__data__.Country
+		var homValue = (this.__data__.hom_2012)
+		var migValue = formatter(this.__data__.mig_2012)
+		var text = name + '<br/>' + '  Net migration: ' + 100000*migValue + '<br/>' + '  Homicide rate: ' + homValue + ' per 100,000'
+		return text
+		
+	}
+})
+
+
+
+
+// Create SVG element
+	//var svg = d3.select("scatterplot-div")
+	    //.append("svg")
+	    //.attr("width", 60)
+	    //.attr("height", 60);
+		
+//Alternative way to add legend
+	 //svg.append("svg:text")
+		//attr("class", "axisText")
+	   //.attr("x", 0)
+	   //.attr("y", 30)
+	   //.text("Legend");
+	   
+	

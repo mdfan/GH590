@@ -1,0 +1,57 @@
+.titleText {
+	color: #A9F5F2;
+	fill: white;
+	font-family: Arial;
+	font-size: 25px;
+	line-height: 25px;
+	font-weight: bold;
+	margin-bottom: 8px;
+	text-shadow: 1px 1px 2px #000;
+}
+
+.axisText {
+	color: #A9F5F2;
+	fill: white; 
+	font-family: Arial;
+	font-size: 20px;
+	line-height: 25px;
+}
+
+.axisTicks {
+	color: #A9F5F2;
+	fill: white; 
+	font-family: Arial;
+	font-size: 15px;
+	line-height: 1px;
+}
+
+.netSending {
+	color: #FF3366;
+	fill: #FF3366; 
+	font-family: Arial;
+	font-size: 18px;
+	line-height: 18px;
+}
+
+.legendWhite {
+	color: #FF3366;
+	fill: white; 
+	font-family: Arial;
+	font-size: 18px;
+	line-height: 18px;
+}
+
+.netReceiving {
+	color: #A9F5F2;
+	fill: #A9F5F2; 
+	font-family: Arial;
+	font-size: 20px;
+	line-height: 25px;
+}
+
+#container {
+    width: 960px;
+    background-color: #FFF;
+    margin: 0 auto;
+    overflow: hidden;
+	border:6px blue;
