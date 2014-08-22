@@ -176,7 +176,7 @@ var data=[{"Country":"Aruba","ISO":"ABW","mig_1997":0.06926,"hom_1997":null,"mig
 {"Country":"Somalia","ISO":"SOM","mig_1997":-1.00004,"hom_1997":null,"mig_2002":-2,"hom_2002":null,"mig_2007":-3,"hom_2007":null,"mig_2012":-1.5,"hom_2012":8},
 {"Country":"Serbia","ISO":"SRB","mig_1997":-2.02845,"hom_1997":null,"mig_2002":-3.2354,"hom_2002":2,"mig_2007":-2.40636,"hom_2007":1.7,"mig_2012":-0.99999,"hom_2012":1.2},
 {"Country":"Sub-Saharan Africa (developing only)","ISO":"SSA","mig_1997":-17.9547,"hom_1997":null,"mig_2002":-8.65146,"hom_2002":null,"mig_2007":-6.8311,"hom_2007":null,"mig_2012":-15.44836,"hom_2012":14.45096866},
-{"Country":"South Sudan","ISO":"SSD","mig_1997":4,"hom_1997":null,"mig_2002":4.32,"hom_2002":null,"mig_2007":7.85,"hom_2007":null,"mig_2012":8.65,"hom_2012":13.9},
+{"Country":"South Sudan","ISO":"SDS","mig_1997":4,"hom_1997":null,"mig_2002":4.32,"hom_2002":null,"mig_2007":7.85,"hom_2007":null,"mig_2012":8.65,"hom_2012":13.9},
 {"Country":"Sub-Saharan Africa (all income levels)","ISO":"SSF","mig_1997":-17.7547,"hom_1997":null,"mig_2002":-8.40146,"hom_2002":null,"mig_2007":-6.6311,"hom_2007":null,"mig_2012":-15.24836,"hom_2012":14.45506149},
 {"Country":"Sao Tome and Principe","ISO":"STP","mig_1997":-0.09107,"hom_1997":null,"mig_2002":-0.05998,"hom_2002":null,"mig_2007":-0.01498,"hom_2007":2.4,"mig_2012":-0.015,"hom_2012":null},
 {"Country":"Suriname","ISO":"SUR","mig_1997":-0.05655,"hom_1997":null,"mig_2002":0.00003,"hom_2002":null,"mig_2007":-0.04998,"hom_2007":null,"mig_2012":-0.05,"hom_2012":6.1},

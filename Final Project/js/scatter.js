@@ -153,15 +153,13 @@ var draw = function() {
 	// Transition all circles to new data
 	plotG.selectAll('circle').transition().duration(500).call(circleFunc)
 	
-	// Axes
+	// Axes, including language to transition middle axis
 	xAxis.call(xAxisFunction)
 	yAxis.call(yAxisFunction)
 	middleAxis
 		.transition().duration(500)
 		.attr('transform', 'translate(' + (xScale(0) + settings.padding) + ',' + (settings.padding + 2.3*settings.radius)+')')
 		.call(middleAxisFunction);
-	
-	// Transition text
 	
 }	
 // Draw axis labels
@@ -222,13 +220,6 @@ build()
 	  .attr("class", "legendWhite")
 	  .text("Negative number means human flow out.")
 	  
-	zeroText = d3.select('#scatter-svg').append("text")
-      .attr("x", xScale(0))
-      .attr("y", 90)
-	  .attr("width", 300)
-	  .attr("height", 100)
-	  .attr("class", "legendWhite")
-	  .text("Zero-Migration Axis")
 
 	legend.append("text")
       .attr("x", -40)
@@ -254,19 +245,65 @@ build()
 	  .attr("class", "legendUSA")
 	  .text("USA")
 	  
-// // Append rectangle
-	// legend.append("rect")
-      // .attr("x", -240)
-      // .attr("y", 80)
-	  // .attr("width", 180)
-	  // .attr("height", 30)
-	  // .style("fill", "white")
+	  // Append text    
+	legend.append("text")
+      .attr("x", -450)
+      .attr("y", 650)
+	  .attr("width", 800)
+	  .attr("height", 400)
+	  .attr("class", "attribText")
+	  .text("Data are estimates for five-year intervals.  Migration data is from the United Nations Population Division, World Population Prospects.")
+
+	  // Append text    
+	legend.append("text")
+      .attr("x", -450)
+      .attr("y", 680)
+	  .attr("width", 800)
+	  .attr("height", 400)
+	  .attr("class", "attribText")
+	  .text("Homicide data is from the United Nations Office on Drugs and Crime's International Homicide Statistics database.")
+
+	  // Append text    
+	legend.append("text")
+      .attr("x", -450)
+      .attr("y", 710)
+	  .attr("width", 800)
+	  .attr("height", 400)
+	  .attr("class", "attribText")
+	  .text("Homicide data includes killings by individuals, gangs and small armed groups.  Killings in armed conflict are not included.")
+
+	  // Append text    
+	legend.append("text")
+      .attr("x", 350)
+      .attr("y", 8)
+	  .attr("width", 800)
+	  .attr("height", 400)
+	  .attr("class", "rectText")
+	  .text("Click on button to choose five-year interval.")
+	  
+	  // Append text    
+	legend.append("text")
+      .attr("x", 350)
+      .attr("y", 25)
+	  .attr("width", 800)
+	  .attr("height", 400)
+	  .attr("class", "rectText")
+	  .text("Hover on circle to see country name and data.")
+	  
+	 //Create floating text that moves, part 1, part 2 below
+	  zeroText = d3.select('#scatter-svg').append("text")
+      .attr("x", xScale(0))
+      .attr("y", yScale(74))
+	  .attr("width", 300)
+	  .attr("height", 100)
+	  .attr("class", "legendWhite")
+	  .text("Zero-Migration Axis")
 
 
 	  
 //Format numbers
 
-var formatter = d3.format('.3n')
+var formatter = d3.format('.3s')
 
 //Hover
 $('#scatter-svg circle').poshytip({
@@ -282,13 +319,18 @@ $('#scatter-svg circle').poshytip({
 	content: function(d){
 		var name = this.__data__.Country
 		var homValue = (this.__data__[settings.yVar])
-		var migValue = formatter(this.__data__[settings.xVar])
-		var text = name + '<br/>' + '  Net migration: ' + 100000*migValue + '<br/>' + '  Homicide rate: ' + homValue + ' per 100,000'
+		var migValue = (this.__data__[settings.xVar])
+		var text = name + '<br/>' + '  Net migration: ' + formatter(100000*migValue) + '<br/>' + '  Homicide rate: ' + homValue + ' per 100,000'
 		return text
 		
 	}
 })
-
+	  // Transition text by taking zeroText and changing the x attribute to be set as the value of the xScale at 0 plus your padding
+	// draw zeroText
+		// .transition().duration(500)
+		// .attr('transform', 'translate(' + (xScale(0) + -5.5*settings.padding) + ',' + (settings.padding + 2.3*settings.radius)+')')
+		// .call(zeroText);
+		
 
 
 
@@ -304,5 +346,14 @@ $('#scatter-svg circle').poshytip({
 	   //.attr("x", 0)
 	   //.attr("y", 30)
 	   //.text("Legend");
-	   
+	   	  
+// // Append rectangle
+	// legend.append("rect")
+      // .attr("x", 290)
+      // .attr("y", -2)
+	  // .attr("width", 310)
+	  // .attr("height", 40)
+	  // .style("fill", "white")
+	  
+	  
 	
