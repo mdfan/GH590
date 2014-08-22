@@ -19,30 +19,40 @@ data.map(function(d) {
 	mapData[d.ISO] = d.mig_2012
 })
 	
-// Make scale
+// Make negative scale
 var values = d3.keys(mapData).map(function(d) {return mapData[d]})
 var min = d3.min(values)
 var max = d3.max(values)	
-var scale = d3.scale.linear().range(['white', 'red']).domain([min, max])
+var scaleneg = d3.scale.linear().range(['white', 'red']).domain([min, 0])
+
+// Make positive scale
+var values = d3.keys(mapData).map(function(d) {return mapData[d]})
+var min = d3.min(values)
+var max = d3.max(values)	
+var scalepos = d3.scale.linear().range(['white', 'blue']).domain([0.001, max])
 
 // Fill in paths if color == true
 	paths.attr('fill', function(d) {
 		var iso3 = d.properties.adm0_a3
 		if(mapData[iso3] == undefined) return '#d3d3d3'	
-		var value = data[iso3]
-		var color = scale(value)
-		return color
-	})		
+		var value = mapData[iso3]
+		if (value <=0) {
+			var color=scaleneg(value)
+			return color
+		}
+		else {
+			var color=scalepos(value)
+			return color
+		}
 
+	})
 
-// create map data variable
-	// var mapData = data.map(function(d) {
-	// mapData[d.Country] = d.mig_2012
-// })
+//Format numbers
 
-// Add hovers if hover == true
-if(hover == "draw") {
-	$('#map-svg path').poshytip({
+var formatter = d3.format('.3s')
+
+//Hover
+$('#map-svg path').poshytip({
 		slide: false, 
 		followCursor: true, 
 		alignTo: 'cursor', 
@@ -52,12 +62,32 @@ if(hover == "draw") {
 		alignY: 'inner-bottom', 
 		className: 'tip-twitter',
 		offsetY: 10,
+		
 		content: function(d){
-			var obj = this.__data__
-			var name = obj.properties.brk_name
-			var iso3 = obj.properties.adm0_a3
-			mean = data[iso3] == undefined ? '' : data[iso3].mean
-			return name + ' ' + mean
-		}
-	})
-}
+		var iso3 = this.__data__.properties.adm0_a3
+		var name = this.__data__.properties.abbrev
+		// var homValue = mapData[iso3]
+		var migValue = formatter(100000*mapData[iso3])
+		var text = name + '<br/>' + '  Net migration: ' + migValue 
+		return text
+		
+	}
+})
+
+// // Create SVG element
+	// var svg = d3.select("#scatter-svg")
+
+// //Draw legend
+	// var legend = svg.append("g")
+	  // .attr("height", 800)
+	  // .attr("width", 800)
+      // .attr('transform', 'translate(600,10)')      
+
+// // Append text    
+	// legend.append("text")
+      // .attr("x", -450)
+      // .attr("y", 170)
+	  // .attr("width", 300)
+	  // .attr("height", 100)
+	  // .attr("class", "netSending")
+	  // .text("Migrant-Sending Nations")

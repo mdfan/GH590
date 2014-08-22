@@ -22,9 +22,17 @@
 </head>
   
   <body bgcolor="#000033">
-	<div style="width:1300px; height:620px; border:6px solid #CC00FF;" id="scatter-div">
-				<svg id="scatter-svg" height=1500 width=1500>
+	<div style="width:1300px; height:620px; border:3px solid #CC00FF;" id="scatter-div">
+		<div id="buttons">
+			<input type="radio" id="2012" name="buttons"checked="checked"><label for="2012">2012</label>
+			<input type="radio" id="2007" name="buttons"><label for="2007">2007</label>
+			<input type="radio" id="2002" name="buttons"><label for="2002">2002</label>
+			<input type="radio" id="1997" name="buttons"><label for="1997">1997</label>
+		</div>
+		<svg id="scatter-svg" height=1500 width=1500>
 			</svg>
+	</div>
+			
 		<script src="js/scatter.js"></script>
 		</div>
 	</div>
@@ -35,7 +43,8 @@
 		</div>
 	  
 	  
-	<div style="width:1300px; height:500px; border:6px solid #CC00FF;" id="map-div">
+	<div style="width:1300px; height:500px; border:3px solid #CC00FF;" id="map-div">
+		<br></br>
 		<svg id="map-svg">
 		<g id="map-g"></g>
 		</svg>

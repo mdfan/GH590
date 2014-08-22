@@ -1,3 +1,24 @@
+//buttonset
+$('#buttons').buttonset()
+
+//call on click
+$('#buttons').on('change', function() {
+	// Get value of radio
+	var year = $('input[name="buttons"]:checked').attr('id')
+	
+	// Do something about it
+	settings.xVar = 'mig_' + year
+	settings.yVar = 'hom_' + year
+	draw()
+})
+	// $('#yvar').selectmenu({
+		// change:function() {
+		
+		// settings.yVar=$('#yvar').val()
+			// draw()
+		// }, 
+// })
+
 //Width and height settings
 var settings = {
 	width:1200,
@@ -16,16 +37,17 @@ var filterFunction = function(d) {
 }
 var data = data.filter(filterFunction)
 console.log(data.length)
+
 //Scale-setting function
 var setScales=function() {
 	//Get min/max values for x
-	xValues=data.map(function(d) {return Number(d.mig_2012)})
+	xValues=data.map(function(d) {return Number(d[settings.xVar])})
 	xMin=d3.min(xValues)
 	xMax=d3.max(xValues)
 
 	// Using a function for y
-	yMin = d3.min(data, function(d ){return Number(d.hom_2012)})
-	yMax = d3.max(data, function(d ){return Number(d.hom_2012)})
+	yMin = d3.min(data, function(d ){return Number(d[settings.yVar])})
+	yMax = d3.max(data, function(d ){return Number(d[settings.yVar])})
   
 	// Define the xScale
 	xScale = d3.scale.linear().domain([xMin, xMax]).range([settings.radius, settings.width - settings.radius])
@@ -70,13 +92,14 @@ var build = function() {
 	  
   
 	// Append yAxis
-	yAxis = d3.select('#scatter-svg').append('g').attr('class', 'axis')
+	yAxis = d3.select('#scatter-svg').append('g').attr('class', 'axis axisTicks')
 	  .attr('transform', 'translate(' + (settings.padding + settings.radius) + ',' + (settings.padding + 2.3*settings.radius)+')')
 	  .call(yAxisFunction);
 
 	// Append middleAxis
 	middleAxis = d3.select('#scatter-svg').append('g').attr('class', 'axis')
-	  .attr('transform', 'translate(' + (settings.padding + 47.5*settings.radius) + ',' + (settings.padding + 2.3*settings.radius)+')')
+	  // .attr('transform', 'translate(' + (settings.padding + 47.5*settings.radius) + ',' + (settings.padding + 2.3*settings.radius)+')')
+	  .attr('transform', 'translate(' + (xScale(0) + settings.padding) + ',' + (settings.padding + 2.3*settings.radius)+')')
 	  .call(middleAxisFunction);
 	  
 	// Append G in which to draw the plot
@@ -95,8 +118,8 @@ var build = function() {
 // Circle positioning function
 var circleFunc = function(circ) {
 	circ
-	.attr('cx', function(d) {return xScale(d.mig_2012)})
-  	.attr('cy', function(d) {return yScale(d.hom_2012)})
+	.attr('cx', function(d) {return xScale(d[settings.xVar])})
+  	.attr('cy', function(d) {return yScale(d[settings.yVar])})
 	.attr('r', settings.radius)
 	.attr('fill', function(d) {
 			console.log(d)
@@ -131,6 +154,14 @@ var draw = function() {
 	plotG.selectAll('circle').transition().duration(500).call(circleFunc)
 	
 	// Axes
+	xAxis.call(xAxisFunction)
+	yAxis.call(yAxisFunction)
+	middleAxis
+		.transition().duration(500)
+		.attr('transform', 'translate(' + (xScale(0) + settings.padding) + ',' + (settings.padding + 2.3*settings.radius)+')')
+		.call(middleAxisFunction);
+	
+	// Transition text
 	
 }	
 // Draw axis labels
@@ -191,14 +222,38 @@ build()
 	  .attr("class", "legendWhite")
 	  .text("Negative number means human flow out.")
 	  
-	legend.append("text")
-      .attr("x", -240)
+	zeroText = d3.select('#scatter-svg').append("text")
+      .attr("x", xScale(0))
       .attr("y", 90)
 	  .attr("width", 300)
 	  .attr("height", 100)
 	  .attr("class", "legendWhite")
 	  .text("Zero-Migration Axis")
-	  	  
+
+	legend.append("text")
+      .attr("x", -40)
+      .attr("y", 170)
+	  .attr("width", 300)
+	  .attr("height", 100)
+	  .attr("class", "netReceiving")
+	  .text("Migrant-Receiving Nations")
+
+	legend.append("text")
+      .attr("x", -80)
+      .attr("y", 200)
+	  .attr("width", 300)
+	  .attr("height", 100)
+	  .attr("class", "legendWhite")
+	  .text("Positive number means human flow in.")
+
+	legend.append("text")
+      .attr("x", 630)
+      .attr("y", 495)
+	  .attr("width", 300)
+	  .attr("height", 100)
+	  .attr("class", "legendUSA")
+	  .text("USA")
+	  
 // // Append rectangle
 	// legend.append("rect")
       // .attr("x", -240)
@@ -226,8 +281,8 @@ $('#scatter-svg circle').poshytip({
 	slide: false, // No slide animation
 	content: function(d){
 		var name = this.__data__.Country
-		var homValue = (this.__data__.hom_2012)
-		var migValue = formatter(this.__data__.mig_2012)
+		var homValue = (this.__data__[settings.yVar])
+		var migValue = formatter(this.__data__[settings.xVar])
 		var text = name + '<br/>' + '  Net migration: ' + 100000*migValue + '<br/>' + '  Homicide rate: ' + homValue + ' per 100,000'
 		return text
 		
