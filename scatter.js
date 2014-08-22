@@ -203,6 +203,40 @@ build()
 	  .attr("width", 800)
       .attr('transform', 'translate(600,10)')      
 
+// Append text    
+	legend.append("text")
+      .attr("x", -450)
+      .attr("y", 170)
+	  .attr("width", 300)
+	  .attr("height", 100)
+	  .attr("class", "netSending")
+	  .text("Migrant-Sending Nations")
+
+	legend.append("text")
+      .attr("x", -500)
+      .attr("y", 200)
+	  .attr("width", 300)
+	  .attr("height", 100)
+	  .attr("class", "legendWhite")
+	  .text("Negative number means human flow out.")
+	  
+
+	legend.append("text")
+      .attr("x", -40)
+      .attr("y", 170)
+	  .attr("width", 300)
+	  .attr("height", 100)
+	  .attr("class", "netReceiving")
+	  .text("Migrant-Receiving Nations")
+
+	legend.append("text")
+      .attr("x", -80)
+      .attr("y", 200)
+	  .attr("width", 300)
+	  .attr("height", 100)
+	  .attr("class", "legendWhite")
+	  .text("Positive number means human flow in.")
+
 	legend.append("text")
       .attr("x", 630)
       .attr("y", 495)
@@ -255,42 +289,8 @@ build()
 	  .attr("height", 400)
 	  .attr("class", "rectText")
 	  .text("Hover on circle to see country name and data.")
-	 
-	 	 //Create text that can move
-	  // Append text    
-	sendingText = d3.select('#scatter-svg').append("text")
-      .attr("x", xScale(-16))
-      .attr("y", yScale(60))
-	  .attr("width", 300)
-	  .attr("height", 100)
-	  .attr("class", "netSending")
-	  .text("Migrant-Sending Nations")
-
-	negText = d3.select('#scatter-svg').append("text")
-      .attr("x", xScale(-19))
-      .attr("y", yScale(50))
-	  .attr("width", 300)
-	  .attr("height", 100)
-	  .attr("class", "legendWhite")
-	  .text("Negative number means human flow out.")
 	  
-
-	receiveText = d3.select('#scatter-svg').append("text")
-      .attr("y", yScale(60))
-	  .attr("x", xScale(14))
-      .attr("width", 300)
-	  .attr("height", 100)
-	  .attr("class", "netReceiving")
-	  .text("Migrant-Receiving Nations")
-
-	posText = d3.select('#scatter-svg').append("text")
-      .attr("x", xScale(12))
-      .attr("y", yScale(50))
-	  .attr("width", 300)
-	  .attr("height", 100)
-	  .attr("class", "legendWhite")
-	  .text("Positive number means human flow in.")
-	  
+	 //Create floating text that moves, part 1, part 2 below
 	  zeroText = d3.select('#scatter-svg').append("text")
       .attr("x", xScale(0))
       .attr("y", yScale(74))
@@ -299,7 +299,8 @@ build()
 	  .attr("class", "legendWhite")
 	  .text("Zero-Migration Axis")
 
- 
+
+	  
 //Format numbers
 
 var formatter = d3.format('.3s')
@@ -325,12 +326,11 @@ $('#scatter-svg circle').poshytip({
 	}
 })
 	  // Transition text by taking zeroText and changing the x attribute to be set as the value of the xScale at 0 plus your padding
-	var drawMovingText = function() {
-	zeroText
-		.transition().duration(500)
-		.attr('transform', 'translate(' + (xScale(0) + -5.5*settings.padding) + ',' + (settings.padding + 2.3*settings.radius)+')')
-		.call(zeroText);
-}
+	// draw zeroText
+		// .transition().duration(500)
+		// .attr('transform', 'translate(' + (xScale(0) + -5.5*settings.padding) + ',' + (settings.padding + 2.3*settings.radius)+')')
+		// .call(zeroText);
+		
 
 
 
